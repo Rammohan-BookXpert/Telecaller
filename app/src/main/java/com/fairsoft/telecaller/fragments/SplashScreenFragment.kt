@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.fairsoft.telecaller.databinding.FragmentSplashScreenBinding
+import com.fairsoft.telecaller.datastore.LoggedUserDataStore
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenFragment : Fragment() {
@@ -33,7 +35,12 @@ class SplashScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var isUserLogged = false
 
+        val loggedDataStore = LoggedUserDataStore(requireContext())
+        loggedDataStore.isUserLogged.asLiveData().observe(this.viewLifecycleOwner) {value ->
+            isUserLogged = value
+        }
 
         Thread {
             Thread.sleep(1000)
@@ -44,8 +51,13 @@ class SplashScreenFragment : Fragment() {
 
             Thread.sleep(2000)
             requireActivity().runOnUiThread {
-                val action = SplashScreenFragmentDirections.actionSplashScreenFragmentToLoginFragment()
-                this.findNavController().navigate(action)
+                if (!isUserLogged) {
+                    val action = SplashScreenFragmentDirections.actionSplashScreenFragmentToLoginFragment()
+                    this.findNavController().navigate(action)
+                } else {
+                    val action = SplashScreenFragmentDirections.actionSplashScreenFragmentToDashboardFragment()
+                    this.findNavController().navigate(action)
+                }
             }
         }.start()
     }

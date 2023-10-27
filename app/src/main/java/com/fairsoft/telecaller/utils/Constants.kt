@@ -1,10 +1,13 @@
 package com.fairsoft.telecaller.utils
 
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+
 const val TAG = "MyLogMessages"
 
 object LoggedUser {
-    const val USER_ID = "userId"
-    const val USER_NAME = "username"
-    const val IS_BXP_USER = "isBookXpertUser"
-    const val IS_USER_LOGGED = "isUserLogged"
+    val USER_ID = stringPreferencesKey("user_id")
+    val USER_NAME = stringPreferencesKey("username")
+    val IS_BXP_USER = stringPreferencesKey("is_book_xpert")
+    val IS_USER_LOGGED = booleanPreferencesKey("is_user_logged")
 }

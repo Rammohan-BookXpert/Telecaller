@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fairsoft.telecaller.datastore.LoggedUserDataStore
 import com.fairsoft.telecaller.network.NetworkApi
 import com.fairsoft.telecaller.utils.TAG
 import com.fairsoft.telecaller.utils.isOnline
@@ -72,8 +73,14 @@ class LoginViewModel : ViewModel() {
                         val userId = obj.getString("UserId")
                         Log.i(TAG, "verifyLogin -> response returned -> data -> $data")
                         Log.i(TAG, "verifyLogin -> response returned -> converted to Obj -> $obj")
+                        Log.i(TAG, "verifyLogin -> userId -> getString -> from Obj -> $userId")
 
                         loadingDialog.dismissDialog()
+                        val loggedDataStore = LoggedUserDataStore(context)
+                        loggedDataStore.saveLoginStatus(context, true)
+                        loggedDataStore.saveCompanyLogged(context, selectedCompany.toString())
+                        loggedDataStore.saveUserId(context, userId)
+                        loggedDataStore.saveUsername(context, username)
                         _loginStatus.postValue("Success")
                         Toast.makeText(context, "Login Success...", Toast.LENGTH_SHORT).show()
                     }
