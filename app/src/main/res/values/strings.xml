@@ -3,6 +3,8 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="check_login_message">Checking Login…</string>
+
     <string name="login">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

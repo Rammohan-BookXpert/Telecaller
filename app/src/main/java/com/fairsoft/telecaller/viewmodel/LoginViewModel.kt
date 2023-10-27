@@ -15,6 +15,7 @@ import com.fairsoft.telecaller.utils.isOnline
 import com.google.gson.Gson
 import com.lrm.bookxpert.utils.LoadingDialog
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class LoginViewModel : ViewModel() {
 
@@ -66,13 +67,16 @@ class LoginViewModel : ViewModel() {
                         loadingDialog.dismissDialog()
                         Toast.makeText(context, "Invalid User", Toast.LENGTH_SHORT).show()
                     } else {
-                        loadingDialog.dismissDialog()
                         val data = Gson().toJson(response)
-                        Log.i(TAG, "verifyLogin -> response returned -> $data")
+                        val obj = JSONObject(data)
+                        val userId = obj.getString("UserId")
+                        Log.i(TAG, "verifyLogin -> response returned -> data -> $data")
+                        Log.i(TAG, "verifyLogin -> response returned -> converted to Obj -> $obj")
+
+                        loadingDialog.dismissDialog()
                         _loginStatus.postValue("Success")
                         Toast.makeText(context, "Login Success...", Toast.LENGTH_SHORT).show()
                     }
-
                 } catch (e: Exception) {
                     loadingDialog.dismissDialog()
                     Toast.makeText(context, "An error occurred...", Toast.LENGTH_SHORT).show()
