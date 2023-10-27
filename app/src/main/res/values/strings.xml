@@ -4,5 +4,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="book_xpert_co">Book Xpert</string>
+    <string name="fair_soft_co">Fair Soft</string>
+
+    <string name="no_internet">No Internet</string>
+    <string name="go_to_network_settings">Go to Network Settings</string>
 
 </resources>
