@@ -1,8 +1,12 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+
     // Safe Args
     id("androidx.navigation.safeargs.kotlin")
+    
+    // ksp
+    id ("com.google.devtools.ksp")
 }
 
 android {
