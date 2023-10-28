@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairsoft.telecaller.datastore.LoggedUserDataStore
+import com.fairsoft.telecaller.model.UserLogin
 import com.fairsoft.telecaller.network.NetworkApi
 import com.fairsoft.telecaller.utils.TAG
 import com.fairsoft.telecaller.utils.isOnline
@@ -20,7 +21,7 @@ import org.json.JSONObject
 
 class LoginViewModel : ViewModel() {
 
-    private val _loginStatus = MutableLiveData<String>("Pending")
+    private val _loginStatus = MutableLiveData("Pending")
     val loginStatus: LiveData<String> get() = _loginStatus
 
     fun isLoginValid(context: Context, username: String, password: String): Boolean {
@@ -39,47 +40,46 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun verifyLogin(activity: Activity, context: Context, username: String, password: String, selectedCompany: Int) {
+    fun verifyLogin(
+        activity: Activity,
+        context: Context,
+        username: String,
+        password: String,
+        selectedCompany: Int
+    ) {
         val loadingDialog = LoadingDialog(activity)
 
         if (isOnline(context)) {
-            val userData = HashMap<String, String>()
-            userData["IsBookXpertUser"] = selectedCompany.toString()
-            userData["UserId"] = ""
-            userData["UserName"] = username
-            userData["IsLead"] = ""
-            userData["Password"] = password
-            userData["Role"] = ""
-            userData["State"] = ""
-            userData["Phone"] = ""
-            userData["ISActive"] = "true"
-            userData["DeviceId"] = ""
 
-            Log.i(TAG, "verifyLogin: -> userData -> HashMap -> $userData")
+            val user = UserLogin(
+                isBookXpertUser = selectedCompany,
+                username = username,
+                password = password
+            )
+
+            Log.i(TAG, "verifyLogin: -> userData -> dataClass -> $user")
 
             loadingDialog.startLoading()
 
             viewModelScope.launch {
                 try {
-                    val response = NetworkApi.retrofitService.checkLogin(userData)
+                    val response = NetworkApi.retrofitService.checkLogin(user)
                     Log.i(TAG, "verifyLogin: -> response -> $response")
 
                     if (response.toString().contains("Invalid User..!")) {
                         loadingDialog.dismissDialog()
                         Toast.makeText(context, "Invalid User", Toast.LENGTH_SHORT).show()
                     } else {
-                        val data = Gson().toJson(response)
-                        val obj = JSONObject(data)
-                        val userId = obj.getString("UserId")
-                        Log.i(TAG, "verifyLogin -> response returned -> data -> $data")
+                        val obj = JSONObject(Gson().toJson(response))
+                        val userId: Double = obj["UserId"] as Double
                         Log.i(TAG, "verifyLogin -> response returned -> converted to Obj -> $obj")
-                        Log.i(TAG, "verifyLogin -> userId -> getString -> from Obj -> $userId")
+                        Log.i(TAG, "verifyLogin -> userId -> from Obj -> ${userId.toInt()}")
 
                         loadingDialog.dismissDialog()
                         val loggedDataStore = LoggedUserDataStore(context)
                         loggedDataStore.saveLoginStatus(context, true)
                         loggedDataStore.saveCompanyLogged(context, selectedCompany.toString())
-                        loggedDataStore.saveUserId(context, userId)
+                        loggedDataStore.saveUserId(context, userId.toString())
                         loggedDataStore.saveUsername(context, username)
                         _loginStatus.postValue("Success")
                         Toast.makeText(context, "Login Success...", Toast.LENGTH_SHORT).show()
