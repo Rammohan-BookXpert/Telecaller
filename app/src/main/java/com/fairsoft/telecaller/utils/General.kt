@@ -1,12 +1,8 @@
 package com.fairsoft.telecaller.utils
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
-import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -54,37 +50,6 @@ fun showNetworkDialog(context: Context) {
         show()
     }
     Toast.makeText(context, "Please connect to internet...", Toast.LENGTH_SHORT).show()
-}
-
-fun showRegisterDeviceDialog(activity: Activity, deviceId: String) {
-    val dialogView = activity.layoutInflater.inflate(R.layout.custom_register_device_id_dialog, null)
-    val deviceIdTv = dialogView.findViewById<TextView>(R.id.device_id)
-    val close = dialogView.findViewById<TextView>(R.id.close_tv)
-    val copy = dialogView.findViewById<TextView>(R.id.copy_tv)
-
-    val builder = AlertDialog.Builder(activity)
-    builder.setView(dialogView)
-    builder.setCancelable(false)
-
-    val deviceIdDialog = builder.create()
-    deviceIdDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-    deviceIdDialog.show()
-
-    deviceIdTv.text = deviceId
-
-    close.setOnClickListener {
-        deviceIdDialog.dismiss()
-        activity.finish()
-    }
-
-    copy.setOnClickListener {
-        val clipBoard = activity.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("deviceId", deviceId)
-        clipBoard.setPrimaryClip(clip)
-
-        activity.runOnUiThread { Toast.makeText(activity, "Copied $deviceId", Toast.LENGTH_SHORT).show() }
-        activity.finish()
-    }
 }
 
 fun showToastMessage(activity: Activity, message: String) {
