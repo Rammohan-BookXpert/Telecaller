@@ -71,7 +71,7 @@ class SplashScreenFragment : Fragment() {
                     SplashScreenFragmentDirections.actionSplashScreenFragmentToLoginFragment()
                 this@SplashScreenFragment.findNavController().navigate(action)
             }
-        }, 2000)
+        }, 2200)
     }
 
     override fun onDestroyView() {

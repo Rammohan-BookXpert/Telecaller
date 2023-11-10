@@ -1,9 +1,10 @@
-package com.fairsoft.telecaller
+package com.fairsoft.telecaller.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.fairsoft.telecaller.R
 import com.fairsoft.telecaller.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
