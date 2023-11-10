@@ -5,24 +5,21 @@ import android.content.Context
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fairsoft.telecaller.datastore.LoggedUserDataStore
-import com.fairsoft.telecaller.model.UserLogin
+import com.fairsoft.telecaller.datastore.AppDataStore
 import com.fairsoft.telecaller.network.NetworkApi
 import com.fairsoft.telecaller.utils.TAG
 import com.fairsoft.telecaller.utils.isOnline
+import com.fairsoft.telecaller.utils.showErrorToast
+import com.fairsoft.telecaller.utils.showToastMessage
 import com.google.gson.Gson
 import com.lrm.bookxpert.utils.LoadingDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class LoginViewModel : ViewModel() {
-
-    private val _loginStatus = MutableLiveData("Pending")
-    val loginStatus: LiveData<String> get() = _loginStatus
 
     fun isLoginValid(context: Context, username: String, password: String): Boolean {
         return when {
@@ -40,53 +37,41 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun verifyLogin(
-        activity: Activity,
-        context: Context,
-        username: String,
-        password: String,
-        selectedCompany: Int
-    ) {
+    fun verifyLogin(activity: Activity, username: String, password: String, selectedCompany: Int) {
         val loadingDialog = LoadingDialog(activity)
+        loadingDialog.startLoading()
 
-        if (isOnline(context)) {
+        if (isOnline(activity)) {
 
-            val user = UserLogin(
-                isBookXpertUser = selectedCompany,
-                username = username,
-                password = password
-            )
+            val user = mapOf("IsBookXpertUser" to "$selectedCompany",
+                "UserId" to "", "UserName" to username,
+                "IsLead" to "", "Password" to password,
+                "Role" to "", "State" to "", "Phone" to "",
+                "ISActive" to "true", "DeviceId" to "")
 
-            Log.i(TAG, "verifyLogin: -> userData -> dataClass -> $user")
-
-            loadingDialog.startLoading()
-
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 try {
                     val response = NetworkApi.retrofitService.checkLogin(user)
                     Log.i(TAG, "verifyLogin: -> response -> $response")
-
                     if (response.toString().contains("Invalid User..!")) {
                         loadingDialog.dismissDialog()
-                        Toast.makeText(context, "Invalid User", Toast.LENGTH_SHORT).show()
+                        showToastMessage(activity, "Invalid User")
                     } else {
-                        val obj = JSONObject(Gson().toJson(response))
-                        val userId: Double = obj["UserId"] as Double
-                        Log.i(TAG, "verifyLogin -> response returned -> converted to Obj -> $obj")
-                        Log.i(TAG, "verifyLogin -> userId -> from Obj -> ${userId.toInt()}")
-
                         loadingDialog.dismissDialog()
-                        val loggedDataStore = LoggedUserDataStore(context)
-                        loggedDataStore.saveLoginStatus(context, true)
-                        loggedDataStore.saveCompanyLogged(context, selectedCompany.toString())
-                        loggedDataStore.saveUserId(context, userId.toString())
-                        loggedDataStore.saveUsername(context, username)
-                        _loginStatus.postValue("Success")
-                        Toast.makeText(context, "Login Success...", Toast.LENGTH_SHORT).show()
+                        val obj = JSONObject(Gson().toJson(response))
+                        val userId: Int = (obj["UserId"] as Double).toInt()
+                        val loggedDataStore = AppDataStore(activity)
+                        viewModelScope.launch {
+                            loggedDataStore.saveLoginStatus(activity, true)
+                            loggedDataStore.saveCompanyLogged(activity, selectedCompany.toString())
+                            loggedDataStore.saveUserId(activity, userId.toString())
+                            loggedDataStore.saveUsername(activity, obj["UserName"].toString())
+                        }
+                        showToastMessage(activity, "Login Success...")
                     }
                 } catch (e: Exception) {
                     loadingDialog.dismissDialog()
-                    Toast.makeText(context, "An error occurred...", Toast.LENGTH_SHORT).show()
+                    showErrorToast(activity)
                     e.printStackTrace()
                     Log.i(TAG, "verifyLogin -> Exception -> ${e.message} ")
                 }

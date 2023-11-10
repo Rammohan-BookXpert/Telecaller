@@ -8,9 +8,11 @@ import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.fairsoft.telecaller.R
 import com.fairsoft.telecaller.databinding.FragmentLoginBinding
+import com.fairsoft.telecaller.datastore.AppDataStore
 import com.fairsoft.telecaller.utils.hideSoftKeyboard
 import com.fairsoft.telecaller.viewmodel.LoginViewModel
 
@@ -23,11 +25,10 @@ class LoginFragment : Fragment() {
         AnimationUtils.loadAnimation(requireContext(), R.anim.shake_anim)
     }
 
-    private var username = ""
-    private var password = ""
     private var selectedCompany = 1
 
     private val loginViewModel: LoginViewModel by activityViewModels()
+    private lateinit var appDataStore: AppDataStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +47,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loginBtn.setOnClickListener { validateLogin() }
+        appDataStore = AppDataStore(requireContext())
 
         binding.chooseCompanyRg.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.fair_soft_co) {
@@ -59,23 +60,25 @@ class LoginFragment : Fragment() {
         val versionName = requireActivity().packageManager.getPackageInfo(requireActivity().packageName, 0).versionName
         binding.versionName.text = "v$versionName"
 
-        loginViewModel.loginStatus.observe(this.viewLifecycleOwner) {status ->
-            if (status == "Success") {
+        appDataStore.loginStatus.asLiveData().observe(this.viewLifecycleOwner) { value ->
+            if (value) {
                 val action = LoginFragmentDirections.actionLoginFragmentToDashboardFragment()
                 this@LoginFragment.findNavController().navigate(action)
             }
         }
+
+        binding.loginBtn.setOnClickListener { validateLogin() }
     }
 
     private fun validateLogin() {
 
         hideSoftKeyboard(requireActivity())
 
-        username = binding.username.text.toString().trim()
-        password = binding.password.text.toString()
+        val username = binding.username.text.toString().trim()
+        val password = binding.password.text.toString()
 
         if (loginViewModel.isLoginValid(requireContext(), username, password)) {
-            loginViewModel.verifyLogin(requireActivity(), requireContext(), username, password, selectedCompany)
+            loginViewModel.verifyLogin(requireActivity(), username, password, selectedCompany)
         } else {
             binding.loginBtn.startAnimation(shakeAnim)
         }

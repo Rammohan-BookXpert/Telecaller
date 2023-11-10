@@ -1,6 +1,5 @@
 package com.fairsoft.telecaller.network
 
-import com.fairsoft.telecaller.model.UserLogin
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,7 +25,7 @@ private val retrofit = Retrofit.Builder()
 interface NetworkApiService {
 
     @POST("Login/IsValidUser")
-    suspend fun checkLogin(@Body body: UserLogin): Any
+    suspend fun checkLogin(@Body body: Map<String, String>): Any
 }
 
 object NetworkApi {

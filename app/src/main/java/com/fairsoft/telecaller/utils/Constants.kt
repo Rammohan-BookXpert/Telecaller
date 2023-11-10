@@ -11,3 +11,7 @@ object LoggedUser {
     val IS_BXP_USER = stringPreferencesKey("is_book_xpert")
     val IS_USER_LOGGED = booleanPreferencesKey("is_user_logged")
 }
+
+object PermissionCodes {
+    const val CALL_PERMISSION_CODE = 100
+}
