@@ -29,4 +29,7 @@
 
     <string name="campaigns_status">Campaigns Status</string>
     <string name="report_status">Report Status</string>
+    <string name="not_connected_calls">Not-Connected Calls (<font color='#EA4335'>%1$s</font>)</string>
+    <string name="new_enquiry_amp_followups">New Enquiry &amp; Followups</string>
+    <string name="tools_followup">Tools Followup</string>
 </resources>
