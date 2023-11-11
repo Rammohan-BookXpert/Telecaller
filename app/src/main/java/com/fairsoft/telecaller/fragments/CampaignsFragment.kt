@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.fairsoft.telecaller.R
 import com.fairsoft.telecaller.adapters.CampaignListAdapter
 import com.fairsoft.telecaller.databinding.FragmentCampaignsBinding
@@ -39,8 +40,16 @@ class CampaignsFragment : Fragment() {
 
         appViewModel.campaignsList.observe(this.viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
-                campListAdapter = CampaignListAdapter(list)
+                binding.noRecFound.visibility = View.INVISIBLE
+                binding.recyclerViewCl.visibility = View.VISIBLE
+                campListAdapter = CampaignListAdapter(list) {
+                    val action = CampaignsFragmentDirections.actionCampaignsFragmentToCampaignByIdFragment(it.campaignId)
+                    this.findNavController().navigate(action)
+                }
                 binding.recyclerViewCl.adapter = campListAdapter
+            } else {
+                binding.noRecFound.visibility = View.VISIBLE
+                binding.recyclerViewCl.visibility = View.INVISIBLE
             }
         }
 
@@ -59,6 +68,11 @@ class CampaignsFragment : Fragment() {
         binding.refreshButton.setOnClickListener {
             binding.refreshButton.startAnimation(refreshAnim)
             appViewModel.getCampaignsList(requireActivity())
+        }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            appViewModel.getCampaignsList(requireActivity())
+            binding.swipeRefreshLayout.isRefreshing = false
         }
     }
 

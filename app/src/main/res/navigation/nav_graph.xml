@@ -61,5 +61,22 @@
         android:id="@+id/campaignsFragment"
         android:name="com.fairsoft.telecaller.fragments.CampaignsFragment"
         android:label="fragment_campaigns"
-        tools:layout="@layout/fragment_campaigns" />
+        tools:layout="@layout/fragment_campaigns" >
+        <action
+            android:id="@+id/action_campaignsFragment_to_campaignByIdFragment"
+            app:destination="@id/campaignByIdFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"/>
+    </fragment>
+    <fragment
+        android:id="@+id/campaignByIdFragment"
+        android:name="com.fairsoft.telecaller.fragments.CampaignByIdFragment"
+        android:label="fragment_campaign_by_id"
+        tools:layout="@layout/fragment_campaign_by_id" >
+        <argument
+            android:name="campaignId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

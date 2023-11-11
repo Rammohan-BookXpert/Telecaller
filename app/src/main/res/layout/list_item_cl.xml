@@ -7,8 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="15dp"
     android:layout_marginEnd="15dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="10dp"
     app:cardBackgroundColor="@color/light_blue"
     app:strokeColor="@color/blue"
     app:strokeWidth="0.5dp"
@@ -47,136 +47,134 @@
             android:layout_marginEnd="20dp"/>
 
         <LinearLayout
-            android:id="@+id/ll_1"
-            android:layout_width="match_parent"
+            android:id="@+id/total_ll"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/camp_name"
-            android:layout_marginTop="20dp"
-            android:gravity="center">
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/total_head"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/total"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_regular"/>
+
+            <TextView
+                android:id="@+id/total_calls"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/total_head"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/total"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/quicksand_regular"/>
-
-                <TextView
-                    android:id="@+id/total_calls"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="500"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:layout_marginTop="10dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="90dp"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/connected_head"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/connected"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/quicksand_regular"/>
-
-                <TextView
-                    android:id="@+id/con_calls"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="500"
-                    android:textSize="16sp"
-                    android:textColor="@color/green"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:layout_marginTop="10dp"/>
-
-            </LinearLayout>
+                tools:text="500"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_bold"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_2"
-            android:layout_width="match_parent"
+            android:id="@+id/con_ll"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/ll_1"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="@id/total_ll"
+            app:layout_constraintStart_toEndOf="@id/total_ll">
+
+            <TextView
+                android:id="@+id/connected_head"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/connected"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_regular"/>
+
+            <TextView
+                android:id="@+id/con_calls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="500"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/green"
+                android:fontFamily="@font/quicksand_bold"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pend_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/con_ll"
+            app:layout_constraintStart_toStartOf="@id/total_ll"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/pend_head"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/pending"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_regular"/>
+
+            <TextView
+                android:id="@+id/pend_calls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="500"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/blue"
+                android:fontFamily="@font/quicksand_bold"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/not_con_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="@id/pend_ll"
+            app:layout_constraintStart_toEndOf="@id/pend_ll"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:gravity="center">
+            android:layout_marginBottom="30dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/not_connected_head"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/not_connected"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_regular"/>
+
+            <TextView
+                android:id="@+id/not_con_calls"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/pend_head"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pending"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/quicksand_regular"/>
-
-                <TextView
-                    android:id="@+id/pend_calls"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="500"
-                    android:textSize="16sp"
-                    android:textColor="@color/blue"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:layout_marginTop="10dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="65dp"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/not_connected_head"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/not_connected"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/quicksand_regular"/>
-
-                <TextView
-                    android:id="@+id/not_con_calls"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="500"
-                    android:textSize="16sp"
-                    android:textColor="@color/red"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:layout_marginTop="10dp"/>
-
-            </LinearLayout>
+                tools:text="500"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/red"
+                android:fontFamily="@font/quicksand_bold"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 

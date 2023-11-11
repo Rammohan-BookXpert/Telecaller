@@ -6,21 +6,22 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.fairsoft.telecaller.databinding.ListItemClBinding
-import com.fairsoft.telecaller.model.Campaign
+import com.fairsoft.telecaller.model.CampaignsList
 
 class CampaignListAdapter(
-    private val campList: List<Campaign>
+    private val campList: List<CampaignsList>,
+    private val onItemClicked: (CampaignsList) -> Unit
 ): RecyclerView.Adapter<CampaignListAdapter.ViewHolder>(), Filterable {
 
-    private var filteredList = ArrayList<Campaign>()
+    private var filteredList = ArrayList<CampaignsList>()
 
     init {
-        filteredList = campList as ArrayList<Campaign>
+        filteredList = campList as ArrayList<CampaignsList>
     }
 
     inner class ViewHolder(
         private val binding: ListItemClBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(camp: Campaign) {
+        fun bind(camp: CampaignsList) {
             binding.campName.text = camp.campaignName
             binding.totalCalls.text = camp.totalNoOfCustomer.toString()
             binding.conCalls.text = camp.connectedCustomers.toString()
@@ -41,6 +42,7 @@ class CampaignListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val camp = filteredList[position]
         holder.bind(camp)
+        holder.itemView.setOnClickListener { onItemClicked(camp) }
     }
 
     override fun getFilter(): Filter {
@@ -48,9 +50,9 @@ class CampaignListAdapter(
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
                 filteredList = if (charSearch.isEmpty()) {
-                    campList as ArrayList<Campaign>
+                    campList as ArrayList<CampaignsList>
                 } else {
-                    val resultList = ArrayList<Campaign>()
+                    val resultList = ArrayList<CampaignsList>()
                     for(camp in campList) {
                         if (camp.campaignName.lowercase().contains(constraint.toString().lowercase())) {
                             resultList.add(camp)
@@ -64,7 +66,7 @@ class CampaignListAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as ArrayList<Campaign>
+                filteredList = results?.values as ArrayList<CampaignsList>
                 notifyDataSetChanged()
             }
         }

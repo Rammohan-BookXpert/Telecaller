@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairsoft.telecaller.model.CampNotConnected
 import com.fairsoft.telecaller.model.Campaign
+import com.fairsoft.telecaller.model.CampaignsList
 import com.fairsoft.telecaller.network.NetworkApi
 import com.fairsoft.telecaller.utils.TAG
 import com.fairsoft.telecaller.utils.isOnline
@@ -23,11 +24,14 @@ class AppViewModel: ViewModel() {
     var companyLogged: Int = 0
     var username: String = ""
 
-    private val _campaignsList = MutableLiveData<MutableList<Campaign>>(mutableListOf())
-    val campaignsList: LiveData<MutableList<Campaign>> get() = _campaignsList
+    private val _campaignsList = MutableLiveData<MutableList<CampaignsList>>(mutableListOf())
+    val campaignsList: LiveData<MutableList<CampaignsList>> get() = _campaignsList
 
     private val _notConnectedCallsList = MutableLiveData<MutableList<CampNotConnected>>(mutableListOf())
     val notConnectedCallsList: LiveData<MutableList<CampNotConnected>> get() = _notConnectedCallsList
+
+    private val _campaignByIdList = MutableLiveData<MutableList<Campaign>>(mutableListOf())
+    val campaignByIdList: LiveData<MutableList<Campaign>> get() = _campaignByIdList
 
     fun getCampaignsList(activity: Activity) {
         val loadingDialog = LoadingDialog(activity)
@@ -73,6 +77,32 @@ class AppViewModel: ViewModel() {
                     showErrorToast(activity)
                     e.printStackTrace()
                     Log.i(TAG, "getCampNotConnectedCallsList -> Exception -> ${e.message} ")
+                }
+            }
+        } else {
+            loadingDialog.dismissDialog()
+            showNetworkDialog(activity)
+        }
+    }
+
+    fun getCampaignById(activity: Activity, campaignId: Int) {
+        val loadingDialog = LoadingDialog(activity)
+        loadingDialog.startLoading()
+
+        if (isOnline(activity)) {
+            _campaignByIdList.value?.clear()
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    loadingDialog.dismissDialog()
+                    Log.i(TAG, "getCampaignById: params -> userId: $userId, campaignId: $campaignId, company: $companyLogged")
+                    val response = NetworkApi.retrofitService.getCampaignById(userId, campaignId, companyLogged).toMutableList()
+                    Log.i(TAG, "getCampaignById: -> response -> $response")
+                    _campaignByIdList.postValue(response)
+                } catch (e: Exception) {
+                    loadingDialog.dismissDialog()
+                    showErrorToast(activity)
+                    e.printStackTrace()
+                    Log.i(TAG, "getCampaignById -> Exception -> ${e.message} ")
                 }
             }
         } else {
