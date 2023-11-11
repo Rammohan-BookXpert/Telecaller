@@ -12,6 +12,7 @@ import com.fairsoft.telecaller.network.NetworkApi
 import com.fairsoft.telecaller.utils.TAG
 import com.fairsoft.telecaller.utils.isOnline
 import com.fairsoft.telecaller.utils.showErrorToast
+import com.fairsoft.telecaller.utils.showNetworkDialog
 import com.fairsoft.telecaller.utils.showToastMessage
 import com.google.gson.Gson
 import com.lrm.bookxpert.utils.LoadingDialog
@@ -42,12 +43,13 @@ class LoginViewModel : ViewModel() {
         loadingDialog.startLoading()
 
         if (isOnline(activity)) {
-
             val user = mapOf("IsBookXpertUser" to "$selectedCompany",
                 "UserId" to "", "UserName" to username,
                 "IsLead" to "", "Password" to password,
                 "Role" to "", "State" to "", "Phone" to "",
                 "ISActive" to "true", "DeviceId" to "")
+
+            Log.i(TAG, "verifyLogin: params -> $user")
 
             viewModelScope.launch(Dispatchers.IO) {
                 try {
@@ -60,12 +62,12 @@ class LoginViewModel : ViewModel() {
                         loadingDialog.dismissDialog()
                         val obj = JSONObject(Gson().toJson(response))
                         val userId: Int = (obj["UserId"] as Double).toInt()
-                        val loggedDataStore = AppDataStore(activity)
+                        val appDataStore = AppDataStore(activity)
                         viewModelScope.launch {
-                            loggedDataStore.saveLoginStatus(activity, true)
-                            loggedDataStore.saveCompanyLogged(activity, selectedCompany.toString())
-                            loggedDataStore.saveUserId(activity, userId.toString())
-                            loggedDataStore.saveUsername(activity, obj["UserName"].toString())
+                            appDataStore.saveLoginStatus(activity, true)
+                            appDataStore.saveCompanyLogged(activity, selectedCompany)
+                            appDataStore.saveUserId(activity, userId)
+                            appDataStore.saveUsername(activity, obj["UserName"].toString())
                         }
                         showToastMessage(activity, "Login Success...")
                     }
@@ -76,6 +78,9 @@ class LoginViewModel : ViewModel() {
                     Log.i(TAG, "verifyLogin -> Exception -> ${e.message} ")
                 }
             }
+        } else {
+            loadingDialog.dismissDialog()
+            showNetworkDialog(activity)
         }
     }
 }

@@ -1,11 +1,15 @@
 package com.fairsoft.telecaller.network
 
+import com.fairsoft.telecaller.model.CampNotConnected
+import com.fairsoft.telecaller.model.Campaign
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://fssservices.bookxpert.co/api/"
 
@@ -26,6 +30,12 @@ interface NetworkApiService {
 
     @POST("Login/IsValidUser")
     suspend fun checkLogin(@Body body: Map<String, String>): Any
+
+    @GET("Campaign/GetCampaignMaster")
+    suspend fun getCampaignsList(@Query("UserId") userId: Int, @Query("IsBookXpertUser") company: Int): List<Campaign>
+
+    @GET("Campaign/GetNotConnectedData")
+    suspend fun getNotConnectedCallsList(@Query("IsBookXpertUser") company: Int, @Query("UserId") userId: Int): List<CampNotConnected>
 }
 
 object NetworkApi {

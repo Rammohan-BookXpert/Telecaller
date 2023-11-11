@@ -5,18 +5,24 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.fairsoft.telecaller.R
 import com.fairsoft.telecaller.databinding.FragmentDashboardBinding
 import com.fairsoft.telecaller.datastore.AppDataStore
+import com.fairsoft.telecaller.viewmodel.AppViewModel
 import kotlinx.coroutines.launch
 
 class DashboardFragment : Fragment() {
@@ -25,6 +31,7 @@ class DashboardFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var appDataStore: AppDataStore
+    private val appViewModel: AppViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,14 +54,40 @@ class DashboardFragment : Fragment() {
             binding.username.text = value
         }
         appDataStore.companyLogged.asLiveData().observe(this.viewLifecycleOwner) { value ->
-            if (value == "0") {
+            if (value == 0) {
                 binding.companyName.text = resources.getString(R.string.comp_0)
-            } else {
-                binding.companyName.text = resources.getString(R.string.comp_0)
+            } else if (value == 1) {
+                binding.companyName.text = resources.getString(R.string.comp_1)
             }
+            appViewModel.companyLogged = value
+        }
+
+        appDataStore.username.asLiveData().observe(this.viewLifecycleOwner) { value ->
+            appViewModel.username = value
+        }
+
+        appDataStore.userId.asLiveData().observe(this.viewLifecycleOwner) { value ->
+            appViewModel.userId = value
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            appViewModel.getCampaignsList(requireActivity())
+            appViewModel.getCampNotConnectedCallsList(requireActivity())
+        }, 1000)
+
+        appViewModel.campaignsList.observe(this.viewLifecycleOwner) { list ->
+            binding.csTv.text = HtmlCompat.fromHtml(resources.getString(R.string.campaigns_status, list.size), HtmlCompat.FROM_HTML_MODE_COMPACT)
+        }
+
+        appViewModel.notConnectedCallsList.observe(this.viewLifecycleOwner) { list ->
+            binding.nccTv.text = HtmlCompat.fromHtml(resources.getString(R.string.not_connected_calls, list.size), HtmlCompat.FROM_HTML_MODE_COMPACT)
         }
 
         binding.logoutBtn.setOnClickListener { showLogoutDialog() }
+        binding.csCard.setOnClickListener {
+            val action = DashboardFragmentDirections.actionDashboardFragmentToCampaignsFragment()
+            this.findNavController().navigate(action)
+        }
     }
 
     // Displays the Logout dialog

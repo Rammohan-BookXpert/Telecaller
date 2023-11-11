@@ -27,9 +27,17 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    <string name="campaigns_status">Campaigns Status</string>
+    <string name="campaigns_status">Campaigns Status (<![CDATA[<font color="#4285F4">%1$d</font>]]>)</string>
     <string name="report_status">Report Status</string>
-    <string name="not_connected_calls">Not-Connected Calls (<font color='#EA4335'>%1$s</font>)</string>
+    <string name="not_connected_calls">Not-Connected Calls (<![CDATA[<font color="#EA4335">%1$d</font>]]>)</string>
     <string name="new_enquiry_amp_followups">New Enquiry &amp; Followups</string>
     <string name="tools_followup">Tools Followup</string>
+
+    <string name="campaigns_list">Campaigns List</string>
+    <string name="search_bar">Search…</string>
+    <string name="campaign">Campaign</string>
+    <string name="total">Total</string>
+    <string name="pending">Pending</string>
+    <string name="connected">Connected</string>
+    <string name="not_connected">Not-Connected</string>
 </resources>

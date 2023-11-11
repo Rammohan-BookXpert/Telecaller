@@ -27,7 +27,7 @@ class AppDataStore(context: Context) {
         }
     }
 
-    suspend fun saveUserId(context: Context, userId: String) {
+    suspend fun saveUserId(context: Context, userId: Int) {
         context.dataStore.edit { preferences ->
             preferences[USER_ID] = userId
         }
@@ -39,7 +39,7 @@ class AppDataStore(context: Context) {
         }
     }
 
-    suspend fun saveCompanyLogged(context: Context, isBookXpert: String) {
+    suspend fun saveCompanyLogged(context: Context, isBookXpert: Int) {
         context.dataStore.edit { preferences ->
             preferences[IS_BXP_USER] = isBookXpert
         }
@@ -58,7 +58,7 @@ class AppDataStore(context: Context) {
             preferences[IS_USER_LOGGED] ?: false
         }
 
-    val userId: Flow<String> = context.dataStore.data
+    val userId: Flow<Int> = context.dataStore.data
         .catch {
             if (it is IOException) {
                 it.printStackTrace()
@@ -68,7 +68,7 @@ class AppDataStore(context: Context) {
             }
         }
         .map { preferences ->
-            preferences[USER_ID] ?: ""
+            preferences[USER_ID] ?: 0
         }
 
     val username: Flow<String> = context.dataStore.data
@@ -84,7 +84,7 @@ class AppDataStore(context: Context) {
             preferences[USER_NAME] ?: ""
         }
 
-    val companyLogged: Flow<String> = context.dataStore.data
+    val companyLogged: Flow<Int> = context.dataStore.data
         .catch {
             if (it is IOException) {
                 it.printStackTrace()
@@ -94,7 +94,7 @@ class AppDataStore(context: Context) {
             }
         }
         .map { preferences ->
-            preferences[IS_BXP_USER] ?: ""
+            preferences[IS_BXP_USER] ?: 0
         }
 
     suspend fun clearAllPreferences(context: Context) {
