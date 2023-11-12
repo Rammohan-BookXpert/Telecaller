@@ -41,4 +41,9 @@
     <string name="connected">Connected</string>
     <string name="not_connected">Not-Connected</string>
     <string name="no_records_found">No records found…</string>
+
+    <string name="company_name">Company Name:</string>
+    <string name="phone_number">Phone Number:</string>
+    <string name="product_name">Product Name:</string>
+    <string name="dealing_product">Dealing Product:</string>
 </resources>

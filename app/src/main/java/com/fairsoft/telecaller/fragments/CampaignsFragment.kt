@@ -38,12 +38,15 @@ class CampaignsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.backIcon.setOnClickListener { this.findNavController().navigateUp() }
+
         appViewModel.campaignsList.observe(this.viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
                 binding.noRecFound.visibility = View.INVISIBLE
                 binding.recyclerViewCl.visibility = View.VISIBLE
                 campListAdapter = CampaignListAdapter(list) {
-                    val action = CampaignsFragmentDirections.actionCampaignsFragmentToCampaignByIdFragment(it.campaignId)
+                    val action = CampaignsFragmentDirections
+                        .actionCampaignsFragmentToCampaignByIdFragment(it.campaignId, it.campaignName)
                     this.findNavController().navigate(action)
                 }
                 binding.recyclerViewCl.adapter = campListAdapter
@@ -56,6 +59,7 @@ class CampaignsFragment : Fragment() {
         binding.searchBar.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 hideSoftKeyboard(requireActivity())
+                campListAdapter.filter.filter(query)
                 return true
             }
 

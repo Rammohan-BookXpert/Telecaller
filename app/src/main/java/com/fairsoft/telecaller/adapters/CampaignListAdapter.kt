@@ -6,22 +6,22 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.fairsoft.telecaller.databinding.ListItemClBinding
-import com.fairsoft.telecaller.model.CampaignsList
+import com.fairsoft.telecaller.model.Campaign
 
 class CampaignListAdapter(
-    private val campList: List<CampaignsList>,
-    private val onItemClicked: (CampaignsList) -> Unit
+    private val campList: List<Campaign>,
+    private val onItemClicked: (Campaign) -> Unit
 ): RecyclerView.Adapter<CampaignListAdapter.ViewHolder>(), Filterable {
 
-    private var filteredList = ArrayList<CampaignsList>()
+    private var filteredList = ArrayList<Campaign>()
 
     init {
-        filteredList = campList as ArrayList<CampaignsList>
+        filteredList = campList as ArrayList<Campaign>
     }
 
     inner class ViewHolder(
         private val binding: ListItemClBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(camp: CampaignsList) {
+        fun bind(camp: Campaign) {
             binding.campName.text = camp.campaignName
             binding.totalCalls.text = camp.totalNoOfCustomer.toString()
             binding.conCalls.text = camp.connectedCustomers.toString()
@@ -50,9 +50,9 @@ class CampaignListAdapter(
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
                 filteredList = if (charSearch.isEmpty()) {
-                    campList as ArrayList<CampaignsList>
+                    campList as ArrayList<Campaign>
                 } else {
-                    val resultList = ArrayList<CampaignsList>()
+                    val resultList = ArrayList<Campaign>()
                     for(camp in campList) {
                         if (camp.campaignName.lowercase().contains(constraint.toString().lowercase())) {
                             resultList.add(camp)
@@ -66,7 +66,7 @@ class CampaignListAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as ArrayList<CampaignsList>
+                filteredList = results?.values as ArrayList<Campaign>
                 notifyDataSetChanged()
             }
         }

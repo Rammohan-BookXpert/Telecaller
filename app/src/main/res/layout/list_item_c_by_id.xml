@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/light_blue"
+    app:strokeColor="@color/blue"
+    app:strokeWidth="0.5dp"
+    app:cardElevation="7dp"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/comp_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/company_name"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/comp_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="ABCD Pvt Ltd"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_regular"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/comp_head"
+            app:layout_constraintStart_toEndOf="@id/comp_head"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/phone_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_number"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_bold"
+            app:layout_constraintTop_toBottomOf="@id/comp_head"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/phone_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="8309583550"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_regular"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/phone_head"
+            app:layout_constraintStart_toStartOf="@id/comp_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/prod_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/product_name"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_bold"
+            app:layout_constraintTop_toBottomOf="@id/phone_head"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/prod_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="PETRO-MAN"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_regular"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/prod_head"
+            app:layout_constraintStart_toStartOf="@id/comp_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/dealing_prod_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dealing_product"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_bold"
+            app:layout_constraintTop_toBottomOf="@id/prod_head"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/dealing_prod_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Petrol and Diesel"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_regular"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/dealing_prod_head"
+            app:layout_constraintStart_toStartOf="@id/comp_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

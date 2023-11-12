@@ -2,7 +2,7 @@ package com.fairsoft.telecaller.network
 
 import com.fairsoft.telecaller.model.CampNotConnected
 import com.fairsoft.telecaller.model.Campaign
-import com.fairsoft.telecaller.model.CampaignsList
+import com.fairsoft.telecaller.model.CampaignDetailed
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -33,13 +33,13 @@ interface NetworkApiService {
     suspend fun checkLogin(@Body body: Map<String, String>): Any
 
     @GET("Campaign/GetCampaignMaster")
-    suspend fun getCampaignsList(@Query("UserId") userId: Int, @Query("IsBookXpertUser") company: Int): List<CampaignsList>
+    suspend fun getCampaignsList(@Query("UserId") userId: Int, @Query("IsBookXpertUser") company: Int): List<Campaign>
 
     @GET("Campaign/GetNotConnectedData")
     suspend fun getNotConnectedCallsList(@Query("IsBookXpertUser") company: Int, @Query("UserId") userId: Int): List<CampNotConnected>
 
     @GET("Campaign/GetCampaignDetailsById")
-    suspend fun getCampaignById(@Query("UserId") userId: Int, @Query("CampaignId") campaignId: Int, @Query("IsBookXpertUser") company: Int): List<Campaign>
+    suspend fun getCampaignById(@Query("UserId") userId: Int, @Query("CampaignId") campaignId: Int, @Query("IsBookXpertUser") company: Int): List<CampaignDetailed>
 }
 
 object NetworkApi {

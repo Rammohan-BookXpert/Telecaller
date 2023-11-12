@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/campaign"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:fontFamily="@font/quicksand_bold"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="@string/campaign"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:fontFamily="@font/quicksand_regular"
             android:singleLine="true"
@@ -54,15 +56,16 @@
             android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/camp_name"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp">
 
             <TextView
                 android:id="@+id/total_head"
-                android:layout_width="150dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/total"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/quicksand_regular"/>
 
@@ -72,7 +75,7 @@
                 android:layout_height="wrap_content"
                 tools:text="500"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/quicksand_bold"
                 android:layout_marginTop="10dp"/>
@@ -93,7 +96,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/connected"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:fontFamily="@font/quicksand_regular"/>
@@ -104,7 +107,7 @@
                 android:layout_height="wrap_content"
                 tools:text="500"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textColor="@color/green"
                 android:fontFamily="@font/quicksand_bold"
                 android:layout_marginTop="10dp"/>
@@ -123,13 +126,13 @@
 
             <TextView
                 android:id="@+id/pend_head"
-                android:layout_width="150dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:text="@string/pending"
+                android:fontFamily="@font/quicksand_regular"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:text="@string/pending"
                 android:textColor="@color/black"
-                android:fontFamily="@font/quicksand_regular"/>
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/pend_calls"
@@ -137,7 +140,7 @@
                 android:layout_height="wrap_content"
                 tools:text="500"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textColor="@color/blue"
                 android:fontFamily="@font/quicksand_bold"
                 android:layout_marginTop="10dp"/>
@@ -159,11 +162,11 @@
                 android:id="@+id/not_connected_head"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="@string/not_connected"
+                android:fontFamily="@font/quicksand_regular"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:text="@string/not_connected"
                 android:textColor="@color/black"
-                android:fontFamily="@font/quicksand_regular"/>
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/not_con_calls"
@@ -171,7 +174,7 @@
                 android:layout_height="wrap_content"
                 tools:text="500"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textColor="@color/red"
                 android:fontFamily="@font/quicksand_bold"
                 android:layout_marginTop="10dp"/>

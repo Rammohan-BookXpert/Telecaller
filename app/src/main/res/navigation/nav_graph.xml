@@ -78,5 +78,8 @@
         <argument
             android:name="campaignId"
             app:argType="integer" />
+        <argument
+            android:name="campaignName"
+            app:argType="string" />
     </fragment>
 </navigation>
