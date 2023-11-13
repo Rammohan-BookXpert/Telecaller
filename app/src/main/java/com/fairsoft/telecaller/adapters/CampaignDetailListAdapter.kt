@@ -1,5 +1,6 @@
 package com.fairsoft.telecaller.adapters
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -24,8 +25,11 @@ class CampaignDetailListAdapter(
         fun bind(campDetail: CampaignDetailed) {
             binding.compName.text = campDetail.companyName
             binding.phoneNum.text = campDetail.mobileNumber
+            binding.phoneNum.paintFlags = Paint.UNDERLINE_TEXT_FLAG
             binding.prodName.text = campDetail.product
             binding.dealingProdName.text = campDetail.dealingProduct
+
+            binding.phoneNum.setOnClickListener { onItemClicked(campDetail) }
         }
     }
 
@@ -39,9 +43,8 @@ class CampaignDetailListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val camp = filteredList[position]
-        holder.bind(camp)
-        holder.itemView.setOnClickListener { onItemClicked(camp) }
+        val campD = filteredList[position]
+        holder.bind(campD)
     }
 
     override fun getFilter(): Filter {
