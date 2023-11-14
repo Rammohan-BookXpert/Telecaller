@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/contact_history_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="@string/contact_history"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/phone_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="8309583550"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_regular"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/contact_history_title"
+            app:layout_constraintBottom_toBottomOf="@id/contact_history_title"
+            app:layout_constraintStart_toEndOf="@id/contact_history_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/no_history_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_history"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_regular"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="@id/history_cl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/history_cl"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/history_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toBottomOf="@id/contact_history_title">
+
+            <TextView
+                android:id="@+id/followUp_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/followup_by"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/followUp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Rammohan Locharla"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_regular"
+                android:singleLine="true"
+                android:ellipsize="end"
+                app:layout_constraintTop_toTopOf="@id/followUp_head"
+                app:layout_constraintStart_toEndOf="@id/followUp_head"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"/>
+
+
+            <TextView
+                android:id="@+id/remarks_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remarks"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_bold"
+                app:layout_constraintTop_toBottomOf="@id/followUp_head"
+                app:layout_constraintStart_toStartOf="@id/followUp_head"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/remarks"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Did not pick"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_regular"
+                android:singleLine="true"
+                android:ellipsize="end"
+                app:layout_constraintTop_toTopOf="@id/remarks_head"
+                app:layout_constraintStart_toEndOf="@id/remarks_head"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"/>
+
+            <TextView
+                android:id="@+id/date_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_bold"
+                app:layout_constraintTop_toBottomOf="@id/remarks_head"
+                app:layout_constraintStart_toStartOf="@id/followUp_head"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="2023-11-14 11:57:00 AM"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_regular"
+                android:singleLine="true"
+                android:ellipsize="end"
+                app:layout_constraintTop_toTopOf="@id/date_head"
+                app:layout_constraintStart_toEndOf="@id/date_head"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/continue_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/quicksand_regular"
+            android:text="@string/contact_dialog_message"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/contact_history_title"
+            app:layout_constraintTop_toBottomOf="@id/history_cl" />
+
+        <TextView
+            android:id="@+id/no_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="@font/quicksand_regular"
+            android:text="@string/no"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/yes_tv"
+            app:layout_constraintEnd_toStartOf="@id/yes_tv"
+            app:layout_constraintTop_toBottomOf="@id/continue_message" />
+
+        <TextView
+            android:id="@+id/yes_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/quicksand_regular"
+            android:text="@string/yes"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

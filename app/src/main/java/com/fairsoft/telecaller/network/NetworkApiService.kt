@@ -3,6 +3,7 @@ package com.fairsoft.telecaller.network
 import com.fairsoft.telecaller.model.CampNotConnected
 import com.fairsoft.telecaller.model.Campaign
 import com.fairsoft.telecaller.model.CampaignDetailed
+import com.fairsoft.telecaller.model.ContactHistory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -40,6 +41,9 @@ interface NetworkApiService {
 
     @GET("Campaign/GetCampaignDetailsById")
     suspend fun getCampaignById(@Query("UserId") userId: Int, @Query("CampaignId") campaignId: Int, @Query("IsBookXpertUser") company: Int): List<CampaignDetailed>
+
+    @POST("AssigneeHistory/AssigneeHistoryByCustomerMobile")
+    suspend fun getContactHistory(@Query("mobileNumber") mobileNum: String, @Query("IsBookXpertUser") company: Int): List<ContactHistory>
 }
 
 object NetworkApi {

@@ -71,8 +71,11 @@ class DashboardFragment : Fragment() {
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            appViewModel.getCampaignsList(requireActivity())
-            appViewModel.getCampNotConnectedCallsList(requireActivity())
+            if (!appViewModel.calledOnce) {
+                appViewModel.getCampaignsList(requireActivity())
+                appViewModel.getCampNotConnectedCallsList(requireActivity())
+            }
+            appViewModel.calledOnce = true
         }, 1000)
 
         appViewModel.campaignsList.observe(this.viewLifecycleOwner) { list ->
@@ -84,8 +87,14 @@ class DashboardFragment : Fragment() {
         }
 
         binding.logoutBtn.setOnClickListener { showLogoutDialog() }
+
         binding.csCard.setOnClickListener {
             val action = DashboardFragmentDirections.actionDashboardFragmentToCampaignsFragment()
+            this.findNavController().navigate(action)
+        }
+
+        binding.nccCard.setOnClickListener {
+            val action = DashboardFragmentDirections.actionDashboardFragmentToCampNotConCallsFragment()
             this.findNavController().navigate(action)
         }
     }

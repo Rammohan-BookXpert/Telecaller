@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.fairsoft.telecaller.model.CampNotConnected
 import com.fairsoft.telecaller.model.Campaign
 import com.fairsoft.telecaller.model.CampaignDetailed
+import com.fairsoft.telecaller.model.ContactHistory
 import com.fairsoft.telecaller.network.NetworkApi
 import com.fairsoft.telecaller.utils.TAG
 import com.fairsoft.telecaller.utils.isOnline
@@ -24,6 +25,8 @@ class AppViewModel: ViewModel() {
     var companyLogged: Int = 0
     var username: String = ""
 
+    var calledOnce = false
+
     private val _campaignsList = MutableLiveData<MutableList<Campaign>>(mutableListOf())
     val campaignsList: LiveData<MutableList<Campaign>> get() = _campaignsList
 
@@ -32,6 +35,9 @@ class AppViewModel: ViewModel() {
 
     private val _campaignByIdList = MutableLiveData<MutableList<CampaignDetailed>>(mutableListOf())
     val campaignByIdList: LiveData<MutableList<CampaignDetailed>> get() = _campaignByIdList
+
+    private val _contactHistory = MutableLiveData<MutableList<ContactHistory>>(mutableListOf())
+    val contactHistory: LiveData<MutableList<ContactHistory>> get() = _contactHistory
 
     fun getCampaignsList(activity: Activity) {
         val loadingDialog = LoadingDialog(activity)
@@ -103,6 +109,32 @@ class AppViewModel: ViewModel() {
                     showErrorToast(activity)
                     e.printStackTrace()
                     Log.i(TAG, "getCampaignById -> Exception -> ${e.message} ")
+                }
+            }
+        } else {
+            loadingDialog.dismissDialog()
+            showNetworkDialog(activity)
+        }
+    }
+
+    fun getContactHistory(activity: Activity, mobileNum: String) {
+        val loadingDialog = LoadingDialog(activity)
+        loadingDialog.startLoading()
+
+        _contactHistory.value?.clear()
+        if (isOnline(activity)) {
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    Log.i(TAG, "getContactHistory: params -> mobileNum: $mobileNum, company: $companyLogged")
+                    val response = NetworkApi.retrofitService.getContactHistory(mobileNum, companyLogged).toMutableList()
+                    Log.i(TAG, "getContactHistory: -> response -> $response")
+                    _contactHistory.postValue(response)
+                    loadingDialog.dismissDialog()
+                } catch (e: Exception) {
+                    loadingDialog.dismissDialog()
+                    showErrorToast(activity)
+                    e.printStackTrace()
+                    Log.i(TAG, "getContactHistory -> Exception -> ${e.message} ")
                 }
             }
         } else {

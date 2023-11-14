@@ -28,7 +28,6 @@ class CampaignDetailListAdapter(
             binding.phoneNum.paintFlags = Paint.UNDERLINE_TEXT_FLAG
             binding.prodName.text = campDetail.product
             binding.dealingProdName.text = campDetail.dealingProduct
-
             binding.phoneNum.setOnClickListener { onItemClicked(campDetail) }
         }
     }

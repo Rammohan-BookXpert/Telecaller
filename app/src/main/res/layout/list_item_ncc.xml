@@ -126,9 +126,7 @@
             app:layout_constraintTop_toBottomOf="@id/prod_head"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginStart="20dp"/>
 
         <TextView
             android:id="@+id/dealing_prod_name"
@@ -144,6 +142,94 @@
             app:layout_constraintStart_toStartOf="@id/comp_name"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/reason_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reason"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_bold"
+            app:layout_constraintTop_toBottomOf="@id/dealing_prod_head"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/reason"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Did not pick"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_regular"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/reason_head"
+            app:layout_constraintStart_toStartOf="@id/comp_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/remarks_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remarks"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_bold"
+            app:layout_constraintTop_toBottomOf="@id/reason_head"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/remarks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Did not pick"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_regular"
+            android:singleLine="true"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/remarks_head"
+            app:layout_constraintStart_toStartOf="@id/comp_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/camp_name_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/campaign"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_bold"
+            app:layout_constraintTop_toBottomOf="@id/remarks_head"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/camp_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="testing 25032023-1"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_regular"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/camp_name_head"
+            app:layout_constraintStart_toStartOf="@id/comp_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

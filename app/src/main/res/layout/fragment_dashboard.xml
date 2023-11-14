@@ -37,6 +37,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
+                <ImageButton
+                    android:id="@+id/upload_excel_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop"
+                    android:backgroundTint="@color/pale_white"
+                    android:src="@drawable/excel_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/logout_btn"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="20dp"
+                    android:contentDescription="@null"
+                    android:importantForAccessibility="no"/>
+
                 <ImageView
                     android:id="@+id/logout_btn"
                     android:layout_width="30dp"
@@ -140,7 +154,9 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="15dp"
             app:cardElevation="5dp"
-            android:layout_margin="8dp">
+            android:layout_margin="8dp"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -334,5 +350,19 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/contacts_icon"
+        android:backgroundTint="@color/blue"
+        app:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="40dp"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
