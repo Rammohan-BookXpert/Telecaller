@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.fairsoft.telecaller.R
 import com.fairsoft.telecaller.adapters.CampaignListAdapter
 import com.fairsoft.telecaller.databinding.FragmentCampaignsBinding
+import com.fairsoft.telecaller.model.Campaign
 import com.fairsoft.telecaller.utils.hideSoftKeyboard
 import com.fairsoft.telecaller.viewmodel.AppViewModel
 
@@ -44,10 +45,8 @@ class CampaignsFragment : Fragment() {
             if (list.isNotEmpty()) {
                 binding.noRecFound.visibility = View.INVISIBLE
                 binding.recyclerViewCl.visibility = View.VISIBLE
-                campListAdapter = CampaignListAdapter(list) {
-                    val action = CampaignsFragmentDirections
-                        .actionCampaignsFragmentToCampaignByIdFragment(it.campaignId, it.campaignName)
-                    this.findNavController().navigate(action)
+                campListAdapter = CampaignListAdapter(list) { clickType, camp ->
+                    navigateToScreen(clickType, camp)
                 }
                 binding.recyclerViewCl.adapter = campListAdapter
             } else {
@@ -77,6 +76,26 @@ class CampaignsFragment : Fragment() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             appViewModel.getCampaignsList(requireActivity())
             binding.swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
+    private fun navigateToScreen(clickType: String, camp: Campaign) {
+        when(clickType) {
+            "CampById" -> {
+                val action = CampaignsFragmentDirections
+                    .actionCampaignsFragmentToCampaignByIdFragment(camp.campaignId, camp.campaignName)
+                this.findNavController().navigate(action)
+            }
+            "CampConById" -> {
+                val action = CampaignsFragmentDirections
+                    .actionCampaignsFragmentToCampConNotConFragment(clickType, camp.campaignName, camp.campaignId)
+                this.findNavController().navigate(action)
+            }
+            "CampNotConById" -> {
+                val action = CampaignsFragmentDirections
+                    .actionCampaignsFragmentToCampConNotConFragment(clickType, camp.campaignName, camp.campaignId)
+                this.findNavController().navigate(action)
+            }
         }
     }
 

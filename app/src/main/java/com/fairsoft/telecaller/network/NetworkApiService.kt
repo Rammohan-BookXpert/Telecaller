@@ -1,6 +1,6 @@
 package com.fairsoft.telecaller.network
 
-import com.fairsoft.telecaller.model.CampNotConnected
+import com.fairsoft.telecaller.model.CampConNotCon
 import com.fairsoft.telecaller.model.Campaign
 import com.fairsoft.telecaller.model.CampaignDetailed
 import com.fairsoft.telecaller.model.ContactHistory
@@ -37,13 +37,19 @@ interface NetworkApiService {
     suspend fun getCampaignsList(@Query("UserId") userId: Int, @Query("IsBookXpertUser") company: Int): List<Campaign>
 
     @GET("Campaign/GetNotConnectedData")
-    suspend fun getNotConnectedCallsList(@Query("IsBookXpertUser") company: Int, @Query("UserId") userId: Int): List<CampNotConnected>
+    suspend fun getNotConnectedCallsList(@Query("IsBookXpertUser") company: Int, @Query("UserId") userId: Int): List<CampConNotCon>
 
     @GET("Campaign/GetCampaignDetailsById")
     suspend fun getCampaignById(@Query("UserId") userId: Int, @Query("CampaignId") campaignId: Int, @Query("IsBookXpertUser") company: Int): List<CampaignDetailed>
 
     @POST("AssigneeHistory/AssigneeHistoryByCustomerMobile")
     suspend fun getContactHistory(@Query("mobileNumber") mobileNum: String, @Query("IsBookXpertUser") company: Int): List<ContactHistory>
+
+    @GET("Campaign/GetConnectedData")
+    suspend fun getConCallsById(@Query("IsBookXpertUser") company: Int, @Query("CampaignId") campaignId: Int, @Query("UserId") userId: Int): List<CampConNotCon>
+
+    @GET("Campaign/GetNotConnectedCampaignDataById")
+    suspend fun getNotConCallsById(@Query("CampaignId") campaignId: Int, @Query("IsBookXpertUser") company: Int, @Query("UserId") userId: Int): List<CampConNotCon>
 }
 
 object NetworkApi {

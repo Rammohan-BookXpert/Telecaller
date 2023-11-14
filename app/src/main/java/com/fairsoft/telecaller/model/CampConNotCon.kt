@@ -2,7 +2,7 @@ package com.fairsoft.telecaller.model
 
 import com.google.gson.annotations.SerializedName
 
-data class CampNotConnected(
+data class CampConNotCon(
     @SerializedName("CampaignCustomerId")
     val campaignCustomerId: Int = 0,
     @SerializedName("CampaignId")

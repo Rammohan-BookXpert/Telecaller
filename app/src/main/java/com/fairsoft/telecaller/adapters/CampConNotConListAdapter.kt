@@ -1,43 +1,43 @@
 package com.fairsoft.telecaller.adapters
 
-import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.fairsoft.telecaller.databinding.ListItemNccBinding
+import com.fairsoft.telecaller.databinding.ListItemConNotConBinding
 import com.fairsoft.telecaller.model.CampConNotCon
 
-class CampNotConCallsListAdapter(
-    private val campNotConCallsList: List<CampConNotCon>,
-    private val onItemClicked: (CampConNotCon) -> Unit
-): RecyclerView.Adapter<CampNotConCallsListAdapter.ViewHolder>(), Filterable {
+class CampConNotConListAdapter(
+    private val campConNotConList: List<CampConNotCon>,
+    //private val onItemClicked: (CampConNotCon) -> Unit
+): RecyclerView.Adapter<CampConNotConListAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = ArrayList<CampConNotCon>()
 
     init {
-        filteredList = campNotConCallsList as ArrayList<CampConNotCon>
+        filteredList = campConNotConList as ArrayList<CampConNotCon>
     }
 
     inner class ViewHolder(
-        private val binding: ListItemNccBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(campNcc: CampConNotCon) {
-            binding.compName.text = campNcc.companyName
-            binding.phoneNum.text = campNcc.mobileNumber
-            binding.phoneNum.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-            binding.prodName.text = campNcc.product
-            binding.dealingProdName.text = campNcc.dealingProduct
-            binding.reason.text = campNcc.reason
-            binding.remarks.text = campNcc.remarks
-            binding.campName.text = campNcc.campaignName
-            binding.phoneNum.setOnClickListener { onItemClicked(campNcc) }
+        private val binding: ListItemConNotConBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(campConNotCon: CampConNotCon) {
+            binding.compName.text = campConNotCon.companyName
+            binding.phoneNum.text = campConNotCon.mobileNumber
+            binding.prodName.text = campConNotCon.product
+            binding.dealingProdName.text = campConNotCon.dealingProduct
+            binding.reason.text = campConNotCon.reason
+            binding.remarks.text = campConNotCon.remarks
+            if (campConNotCon.hasHistory == 1) {
+                binding.historyIcon.visibility = View.VISIBLE
+            } else binding.historyIcon.visibility = View.INVISIBLE
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ListItemNccBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            ListItemConNotConBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -45,8 +45,8 @@ class CampNotConCallsListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val campNcc = filteredList[position]
-        holder.bind(campNcc)
+        val campConNotCon = filteredList[position]
+        holder.bind(campConNotCon)
     }
 
     override fun getFilter(): Filter {
@@ -54,10 +54,10 @@ class CampNotConCallsListAdapter(
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
                 filteredList = if (charSearch.isEmpty()) {
-                    campNotConCallsList as ArrayList<CampConNotCon>
+                    campConNotConList as ArrayList<CampConNotCon>
                 } else {
                     val resultList = ArrayList<CampConNotCon>()
-                    for(campNcc in campNotConCallsList) {
+                    for(campNcc in campConNotConList) {
                         if (campNcc.companyName.lowercase().contains(constraint.toString().lowercase()) ||
                             campNcc.mobileNumber.lowercase().contains(constraint.toString().lowercase())) {
                             resultList.add(campNcc)

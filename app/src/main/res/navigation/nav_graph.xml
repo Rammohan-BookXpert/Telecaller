@@ -34,7 +34,11 @@
             app:popExitAnim="@anim/pop_exit_anim"/>
         <action
             android:id="@+id/action_dashboardFragment_to_campNotConCallsFragment"
-            app:destination="@id/campNotConCallsFragment" />
+            app:destination="@id/campNotConCallsFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/splashScreenFragment"
@@ -72,6 +76,13 @@
             app:exitAnim="@anim/exit_anim"
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim"/>
+        <action
+            android:id="@+id/action_campaignsFragment_to_campConNotConFragment"
+            app:destination="@id/campConNotConFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/campaignByIdFragment"
@@ -90,4 +101,19 @@
         android:name="com.fairsoft.telecaller.fragments.CampNotConCallsFragment"
         android:label="fragment_camp_not_con_calls"
         tools:layout="@layout/fragment_camp_not_con_calls" />
+    <fragment
+        android:id="@+id/campConNotConFragment"
+        android:name="com.fairsoft.telecaller.fragments.CampConNotConFragment"
+        android:label="fragment_camp_con_not_con"
+        tools:layout="@layout/fragment_camp_con_not_con" >
+        <argument
+            android:name="clickType"
+            app:argType="string" />
+        <argument
+            android:name="campaignName"
+            app:argType="string" />
+        <argument
+            android:name="campaignId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

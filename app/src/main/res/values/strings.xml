@@ -61,4 +61,8 @@
     <string name="sim_1">SIM 1</string>
     <string name="sim_2">SIM 2</string>
     <string name="cancel">Cancel</string>
+
+    <string name="last_call">Last Call:</string>
+    <string name="con_calls">Connected Calls</string>
+    <string name="not_con_calls">Not Connected Calls</string>
 </resources>

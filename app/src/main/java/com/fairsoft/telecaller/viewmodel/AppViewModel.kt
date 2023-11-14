@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fairsoft.telecaller.model.CampNotConnected
+import com.fairsoft.telecaller.model.CampConNotCon
 import com.fairsoft.telecaller.model.Campaign
 import com.fairsoft.telecaller.model.CampaignDetailed
 import com.fairsoft.telecaller.model.ContactHistory
@@ -30,14 +30,20 @@ class AppViewModel: ViewModel() {
     private val _campaignsList = MutableLiveData<MutableList<Campaign>>(mutableListOf())
     val campaignsList: LiveData<MutableList<Campaign>> get() = _campaignsList
 
-    private val _notConnectedCallsList = MutableLiveData<MutableList<CampNotConnected>>(mutableListOf())
-    val notConnectedCallsList: LiveData<MutableList<CampNotConnected>> get() = _notConnectedCallsList
+    private val _notConnectedCallsList = MutableLiveData<MutableList<CampConNotCon>>(mutableListOf())
+    val notConnectedCallsList: LiveData<MutableList<CampConNotCon>> get() = _notConnectedCallsList
 
     private val _campaignByIdList = MutableLiveData<MutableList<CampaignDetailed>>(mutableListOf())
     val campaignByIdList: LiveData<MutableList<CampaignDetailed>> get() = _campaignByIdList
 
     private val _contactHistory = MutableLiveData<MutableList<ContactHistory>>(mutableListOf())
     val contactHistory: LiveData<MutableList<ContactHistory>> get() = _contactHistory
+
+    private val _campConByIdList = MutableLiveData<MutableList<CampConNotCon>>(mutableListOf())
+    val campConByIdList: LiveData<MutableList<CampConNotCon>> get() = _campConByIdList
+
+    private val _campNotConByIdList = MutableLiveData<MutableList<CampConNotCon>>(mutableListOf())
+    val campNotConByIdList: LiveData<MutableList<CampConNotCon>> get() = _campNotConByIdList
 
     fun getCampaignsList(activity: Activity) {
         val loadingDialog = LoadingDialog(activity)
@@ -135,6 +141,58 @@ class AppViewModel: ViewModel() {
                     showErrorToast(activity)
                     e.printStackTrace()
                     Log.i(TAG, "getContactHistory -> Exception -> ${e.message} ")
+                }
+            }
+        } else {
+            loadingDialog.dismissDialog()
+            showNetworkDialog(activity)
+        }
+    }
+
+    fun getCampConByIdList(activity: Activity, campaignId: Int) {
+        val loadingDialog = LoadingDialog(activity)
+        loadingDialog.startLoading()
+
+        _campConByIdList.value?.clear()
+        if (isOnline(activity)) {
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    Log.i(TAG, "getCampConByIdList: params -> userId: $userId, campaignId: $campaignId, company: $companyLogged")
+                    val response = NetworkApi.retrofitService.getConCallsById(companyLogged, campaignId, userId).toMutableList()
+                    Log.i(TAG, "getCampConByIdList: -> response -> $response")
+                    _campConByIdList.postValue(response)
+                    loadingDialog.dismissDialog()
+                } catch (e: Exception) {
+                    loadingDialog.dismissDialog()
+                    showErrorToast(activity)
+                    e.printStackTrace()
+                    Log.i(TAG, "getCampConByIdList -> Exception -> ${e.message} ")
+                }
+            }
+        } else {
+            loadingDialog.dismissDialog()
+            showNetworkDialog(activity)
+        }
+    }
+
+    fun getCampNotConByIdList(activity: Activity, campaignId: Int) {
+        val loadingDialog = LoadingDialog(activity)
+        loadingDialog.startLoading()
+
+        _campNotConByIdList.value?.clear()
+        if (isOnline(activity)) {
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    Log.i(TAG, "getCampNotConByIdList: params -> userId: $userId, campaignId: $campaignId, company: $companyLogged")
+                    val response = NetworkApi.retrofitService.getNotConCallsById(campaignId, companyLogged, userId).toMutableList()
+                    Log.i(TAG, "getCampNotConByIdList: -> response -> $response")
+                    _campNotConByIdList.postValue(response)
+                    loadingDialog.dismissDialog()
+                } catch (e: Exception) {
+                    loadingDialog.dismissDialog()
+                    showErrorToast(activity)
+                    e.printStackTrace()
+                    Log.i(TAG, "getCampNotConByIdList -> Exception -> ${e.message} ")
                 }
             }
         } else {

@@ -10,7 +10,7 @@ import com.fairsoft.telecaller.model.Campaign
 
 class CampaignListAdapter(
     private val campList: List<Campaign>,
-    private val onItemClicked: (Campaign) -> Unit
+    private val onItemClicked: (clickType: String, Campaign) -> Unit
 ): RecyclerView.Adapter<CampaignListAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = ArrayList<Campaign>()
@@ -24,9 +24,15 @@ class CampaignListAdapter(
         fun bind(camp: Campaign) {
             binding.campName.text = camp.campaignName
             binding.totalCalls.text = camp.totalNoOfCustomer.toString()
+            //binding.totalCalls.paintFlags = Paint.UNDERLINE_TEXT_FLAG
             binding.conCalls.text = camp.connectedCustomers.toString()
             binding.pendCalls.text = camp.openCustomer.toString()
+            //binding.pendCalls.paintFlags = Paint.UNDERLINE_TEXT_FLAG
             binding.notConCalls.text = camp.notConnectedCustomers.toString()
+            //binding.notConCalls.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            binding.totalCalls.setOnClickListener { onItemClicked("CampById", camp) }
+            binding.conCalls.setOnClickListener { onItemClicked("CampConById", camp) }
+            binding.notConCalls.setOnClickListener { onItemClicked("CampNotConById", camp) }
         }
     }
 
@@ -42,7 +48,6 @@ class CampaignListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val camp = filteredList[position]
         holder.bind(camp)
-        holder.itemView.setOnClickListener { onItemClicked(camp) }
     }
 
     override fun getFilter(): Filter {
