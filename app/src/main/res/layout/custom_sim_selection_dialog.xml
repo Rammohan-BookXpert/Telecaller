@@ -41,7 +41,6 @@
             android:id="@+id/sim_options"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checkedButton="@id/sim_1"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/sim_title"
             android:layout_marginTop="20dp"
