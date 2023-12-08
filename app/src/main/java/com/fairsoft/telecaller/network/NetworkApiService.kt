@@ -4,6 +4,7 @@ import com.fairsoft.telecaller.model.CampConNotCon
 import com.fairsoft.telecaller.model.Campaign
 import com.fairsoft.telecaller.model.CampaignDetailed
 import com.fairsoft.telecaller.model.ContactHistory
+import com.fairsoft.telecaller.model.UserSummary
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -50,6 +51,9 @@ interface NetworkApiService {
 
     @GET("Campaign/GetNotConnectedCampaignDataById")
     suspend fun getNotConCallsById(@Query("CampaignId") campaignId: Int, @Query("IsBookXpertUser") company: Int, @Query("UserId") userId: Int): List<CampConNotCon>
+
+    @POST("Report/UserDayActivity")
+    suspend fun getUserSummaryByDates(@Query("UserId") userId: Int, @Query("IsBookXpertUser") company: Int, @Query("FromDate") fromDate: String, @Query("ToDate") toDate: String): UserSummary
 }
 
 object NetworkApi {

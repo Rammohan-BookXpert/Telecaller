@@ -7,11 +7,13 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
@@ -22,6 +24,7 @@ import androidx.navigation.fragment.findNavController
 import com.fairsoft.telecaller.R
 import com.fairsoft.telecaller.databinding.FragmentDashboardBinding
 import com.fairsoft.telecaller.datastore.AppDataStore
+import com.fairsoft.telecaller.utils.TAG
 import com.fairsoft.telecaller.viewmodel.AppViewModel
 import kotlinx.coroutines.launch
 
@@ -71,11 +74,8 @@ class DashboardFragment : Fragment() {
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if (!appViewModel.calledOnce) {
-                appViewModel.getCampaignsList(requireActivity())
-                appViewModel.getCampNotConnectedCallsList(requireActivity())
-            }
-            appViewModel.calledOnce = true
+            appViewModel.getCampaignsList(requireActivity())
+            appViewModel.getCampNotConnectedCallsList(requireActivity())
         }, 1000)
 
         appViewModel.campaignsList.observe(this.viewLifecycleOwner) { list ->
@@ -97,6 +97,22 @@ class DashboardFragment : Fragment() {
             val action = DashboardFragmentDirections.actionDashboardFragmentToCampNotConCallsFragment()
             this.findNavController().navigate(action)
         }
+
+        binding.rsCard.setOnClickListener {
+            val action = DashboardFragmentDirections.actionDashboardFragmentToReportStatusFragment()
+            this.findNavController().navigate(action)
+        }
+
+        binding.uploadExcelBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "*/*"
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayListOf("application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+            excelPicker.launch(intent)
+        }
+    }
+
+    private val excelPicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        Log.i(TAG, "excelPicker -> uri -> $it")
     }
 
     // Displays the Logout dialog

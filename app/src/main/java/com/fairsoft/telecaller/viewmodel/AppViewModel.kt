@@ -10,22 +10,23 @@ import com.fairsoft.telecaller.model.CampConNotCon
 import com.fairsoft.telecaller.model.Campaign
 import com.fairsoft.telecaller.model.CampaignDetailed
 import com.fairsoft.telecaller.model.ContactHistory
+import com.fairsoft.telecaller.model.UserSummary
 import com.fairsoft.telecaller.network.NetworkApi
 import com.fairsoft.telecaller.utils.TAG
 import com.fairsoft.telecaller.utils.isOnline
+import com.fairsoft.telecaller.utils.sdf
 import com.fairsoft.telecaller.utils.showErrorToast
 import com.fairsoft.telecaller.utils.showNetworkDialog
 import com.lrm.bookxpert.utils.LoadingDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class AppViewModel: ViewModel() {
 
     var userId: Int = 0
     var companyLogged: Int = 0
     var username: String = ""
-
-    var calledOnce = false
 
     private val _campaignsList = MutableLiveData<MutableList<Campaign>>(mutableListOf())
     val campaignsList: LiveData<MutableList<Campaign>> get() = _campaignsList
@@ -44,6 +45,12 @@ class AppViewModel: ViewModel() {
 
     private val _campNotConByIdList = MutableLiveData<MutableList<CampConNotCon>>(mutableListOf())
     val campNotConByIdList: LiveData<MutableList<CampConNotCon>> get() = _campNotConByIdList
+
+    var fromDate: String = sdf.format(Calendar.getInstance().time)
+    var toDate: String = sdf.format(Calendar.getInstance().time)
+
+    private val _userSummary = MutableLiveData(UserSummary())
+    val userSummary: LiveData<UserSummary> get() = _userSummary
 
     fun getCampaignsList(activity: Activity) {
         val loadingDialog = LoadingDialog(activity)
@@ -184,15 +191,41 @@ class AppViewModel: ViewModel() {
             viewModelScope.launch(Dispatchers.IO) {
                 try {
                     Log.i(TAG, "getCampNotConByIdList: params -> userId: $userId, campaignId: $campaignId, company: $companyLogged")
-                    val response = NetworkApi.retrofitService.getNotConCallsById(campaignId, companyLogged, userId).toMutableList()
+                    val response = NetworkApi.retrofitService.getNotConCallsById(campaignId, companyLogged, userId)
                     Log.i(TAG, "getCampNotConByIdList: -> response -> $response")
-                    _campNotConByIdList.postValue(response)
+                    _campNotConByIdList.postValue(response.toMutableList())
                     loadingDialog.dismissDialog()
                 } catch (e: Exception) {
                     loadingDialog.dismissDialog()
                     showErrorToast(activity)
                     e.printStackTrace()
                     Log.i(TAG, "getCampNotConByIdList -> Exception -> ${e.message} ")
+                }
+            }
+        } else {
+            loadingDialog.dismissDialog()
+            showNetworkDialog(activity)
+        }
+    }
+
+    fun getUserSummaryByDates(activity: Activity, fromDate: String, toDate: String) {
+        val loadingDialog = LoadingDialog(activity)
+        loadingDialog.startLoading()
+
+        if (isOnline(activity)) {
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    Log.i(TAG, "getUserSummaryByDates: params -> userId: $userId, company: $companyLogged, fromDate: $fromDate " +
+                            "toDate: $toDate")
+                    val response = NetworkApi.retrofitService.getUserSummaryByDates(userId, companyLogged, fromDate, toDate)
+                    Log.i(TAG, "getUserSummaryByDates: -> response -> $response")
+                    loadingDialog.dismissDialog()
+                    _userSummary.postValue(response)
+                } catch (e: Exception) {
+                    loadingDialog.dismissDialog()
+                    showErrorToast(activity)
+                    e.printStackTrace()
+                    Log.i(TAG, "getUserSummaryByDates -> Exception -> ${e.message} ")
                 }
             }
         } else {

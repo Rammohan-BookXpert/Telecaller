@@ -65,4 +65,9 @@
     <string name="last_call">Last Call:</string>
     <string name="con_calls">Connected Calls</string>
     <string name="not_con_calls">Not Connected Calls</string>
+
+    <string name="to">To</string>
+    <string name="from">From</string>
+    <string name="get_data">Get Data</string>
+    <string name="total_enquiries">Total Enquiries</string>
 </resources>

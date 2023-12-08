@@ -1,5 +1,6 @@
 package com.fairsoft.telecaller.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -13,6 +14,17 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import com.fairsoft.telecaller.R
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+
+@SuppressLint("ConstantLocale")
+val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+private val calendar = Calendar.getInstance()
+val currentYear = calendar.get(Calendar.YEAR)
+val currentMonth = calendar.get(Calendar.MONTH)
+val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
 
 fun isOnline(context: Context): Boolean {
     val connectivityManager =
@@ -71,4 +83,17 @@ fun showServerErrorDialog(activity: Activity) {
         }
         Toast.makeText(activity, "An error occurred...", Toast.LENGTH_SHORT).show()
     }
+}
+
+fun toServerDate(date: String): String {
+    val dateSplit = date.split("-")
+    val calendar = Calendar.getInstance()
+    calendar.set(dateSplit[2].toInt(), dateSplit[1].toInt() - 1, dateSplit[0].toInt())
+    return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+}
+
+fun getFormattedDate(day: Int, month: Int, year: Int): String {
+    val calendar = Calendar.getInstance()
+    calendar.set(year, month, day)
+    return sdf.format(calendar.time)
 }

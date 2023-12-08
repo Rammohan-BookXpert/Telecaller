@@ -3,4 +3,10 @@
     <style name="Widget.App.RadioButton" parent="Widget.Material3.CompoundButton.RadioButton">
         <item name="fontFamily">@font/quicksand_bold</item>
     </style>
+
+    <style name="datePicker" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">@color/blue</item>
+        <item name="android:textColorPrimaryInverse">@color/white</item>
+        <item name="android:textColorSecondaryInverse">@color/white</item>
+    </style>
 </resources>

@@ -39,6 +39,13 @@
             app:exitAnim="@anim/exit_anim"
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim"/>
+        <action
+            android:id="@+id/action_dashboardFragment_to_reportStatusFragment"
+            app:destination="@id/reportStatusFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/splashScreenFragment"
@@ -116,4 +123,9 @@
             android:name="campaignId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/reportStatusFragment"
+        android:name="com.fairsoft.telecaller.fragments.ReportStatusFragment"
+        android:label="fragment_report_status"
+        tools:layout="@layout/fragment_report_status" />
 </navigation>
